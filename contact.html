@@ -44,21 +44,186 @@
           <p><strong>Phone</strong> <span class="contact-name">Harry:</span> <a href="tel:0490765145">0490 765 145</a></p>
           <p><strong>Phone</strong> <span class="contact-name">Noah:</span> <a href="tel:123456789">0490 756 229</a></p>
         </div>
-        <h2 class="enquire-title lazydog">Enquire now</h2>
-        <form class="contact-form" action="#" method="post" onsubmit="alert('This demo form is non-functional. Email me at whosjulianfilms@gmail.com'); return false;">
-          <label>
-            <span class="vis">Name</span>
-            <input type="text" name="name" placeholder="Your name" required>
-          </label>
-          <label>
-            <span class="vis">Email</span>
-            <input type="email" name="email" placeholder="you@email.com" required>
-          </label>
-          <label>
-            <span class="vis">Message</span>
-            <textarea name="message" rows="4" placeholder="Tell us about your project"></textarea>
-          </label>
-          <p><button type="submit" class="button">Send enquiry</button></p>
+        <h2 class="enquire-title lazydog">Client Project Form</h2>
+
+        <!-- Confirmation Modal -->
+        <div class="confirm-modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
+          <div class="confirm-modal">
+            <h3 id="confirmModalTitle">Confirm Submission</h3>
+            <p>Are you sure you want to send this form? Please check that all required information is complete before sending.</p>
+            <div class="confirm-modal-actions">
+              <button type="button" class="button ghost" id="confirmCancel">Go Back</button>
+              <button type="button" class="button" id="confirmSend">Confirm &amp; Send</button>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form client-project-form" name="client-project-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="clientProjectForm">
+          <input type="hidden" name="form-name" value="client-project-form" />
+          <p class="bot-field-wrapper"><label>Do not fill this out: <input name="bot-field" /></label></p>
+
+          <!-- Client Information -->
+          <div class="form-section">
+            <div class="form-row-two">
+              <label><span class="vis">Client Name *</span><input type="text" name="client-name" placeholder="Your full name" required></label>
+              <label><span class="vis">Business Name</span><input type="text" name="business-name" placeholder="Your business name"></label>
+            </div>
+            <div class="form-row-two">
+              <label><span class="vis">Email *</span><input type="email" name="email" placeholder="you@email.com" required></label>
+              <label><span class="vis">Phone</span><input type="tel" name="phone" placeholder="Your phone number"></label>
+            </div>
+            <div class="form-row-two">
+              <label><span class="vis">Project Date(s)</span><input type="text" name="project-dates" placeholder="e.g. 15 July 2026"></label>
+              <label><span class="vis">Preferred Delivery Date</span><input type="text" name="delivery-date" placeholder="e.g. 30 July 2026"></label>
+            </div>
+          </div>
+
+          <!-- VIDEO EDITING -->
+          <div class="form-section">
+            <h3 class="form-section-header lazydog">Video Editing</h3>
+            <div class="form-check-row">
+              <label class="form-check-label">
+                <input type="checkbox" name="video-standard-editing" value="Yes">
+                Standard Editing
+              </label>
+              <span class="form-price">$45 AUD / Hour</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label">
+                <input type="checkbox" name="video-rush-editing" value="Yes">
+                Rush Editing
+              </label>
+              <span class="form-price">$100 AUD / Hour</span>
+            </div>
+          </div>
+
+          <!-- VIDEOGRAPHY -->
+          <div class="form-section">
+            <h3 class="form-section-header lazydog">Videography</h3>
+            <div class="form-check-row">
+              <label class="form-check-label">
+                <input type="checkbox" name="video-quarter-day" value="Yes">
+                Quarter-Day Coverage (Up to 2 Hours)
+              </label>
+              <span class="form-price">$200 AUD</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label">
+                <input type="checkbox" name="video-half-day" value="Yes">
+                Half-Day Coverage (Up to 4 Hours)
+              </label>
+              <span class="form-price">$360 AUD</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label">
+                <input type="checkbox" name="video-full-day" value="Yes">
+                Full-Day Coverage (Up to 8 Hours)
+              </label>
+              <span class="form-price">$680 AUD</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label">
+                <input type="checkbox" name="video-additional-coverage" value="Yes" id="additionalCoverageCheck">
+                Additional Coverage
+              </label>
+              <span class="form-price">$80 AUD / Hour</span>
+            </div>
+            <div class="form-additional-hours" id="additionalHoursRow">
+              <label><span class="vis">Additional Hours Required</span><input type="number" name="additional-hours" placeholder="Number of hours" min="1"></label>
+            </div>
+          </div>
+
+          <!-- CONTENT PACKAGES -->
+          <div class="form-section">
+            <h3 class="form-section-header lazydog">Content Packages</h3>
+            <div class="form-check-row">
+              <label class="form-check-label">
+                <input type="checkbox" name="pkg-social-media" value="Yes">
+                Social Media Package
+              </label>
+              <span class="form-price">From $300 AUD</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label">
+                <input type="checkbox" name="pkg-event-highlight" value="Yes">
+                Event Highlight Package
+              </label>
+              <span class="form-price">From $500 AUD</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label">
+                <input type="checkbox" name="pkg-promotional-video" value="Yes">
+                Promotional Video Package
+              </label>
+              <span class="form-price">From $750 AUD</span>
+            </div>
+          </div>
+
+          <!-- ADDITIONAL SERVICES -->
+          <div class="form-section">
+            <h3 class="form-section-header lazydog">Additional Services</h3>
+            <div class="form-check-row">
+              <label class="form-check-label">
+                <input type="checkbox" name="svc-drone" value="Yes">
+                Drone Operation
+              </label>
+              <span class="form-price">$80 AUD / Hour</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label">
+                <input type="checkbox" name="svc-revisions" value="Yes">
+                Additional Revisions
+              </label>
+              <span class="form-price">$45 AUD / Hour</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label">
+                <input type="checkbox" name="svc-travel" value="Yes">
+                Travel Outside Local Area
+              </label>
+              <span class="form-price">Quote on Request</span>
+            </div>
+          </div>
+
+          <!-- PROJECT DETAILS -->
+          <div class="form-section">
+            <h3 class="form-section-header lazydog">Project Details</h3>
+            <label>
+              <span class="vis">Brief Project Description</span>
+              <textarea name="project-description" rows="4" placeholder="Describe your project..."></textarea>
+            </label>
+            <label>
+              <span class="vis">Deliverables Required</span>
+              <textarea name="deliverables" rows="4" placeholder="List the deliverables you need..."></textarea>
+            </label>
+          </div>
+
+          <!-- QUOTE SUMMARY -->
+          <div class="form-section">
+            <h3 class="form-section-header lazydog">Quote Summary</h3>
+            <label>
+              <span class="vis">Selected Services</span>
+              <textarea name="selected-services" rows="3" placeholder="Summary of selected services..."></textarea>
+            </label>
+            <label>
+              <span class="vis">Estimated Budget (AUD)</span>
+              <input type="text" name="estimated-budget" placeholder="$ e.g. 500">
+            </label>
+          </div>
+
+          <!-- CLIENT APPROVAL -->
+          <div class="form-section">
+            <h3 class="form-section-header lazydog">Client Approval</h3>
+            <div class="form-check-row approval-check-row">
+              <label class="form-check-label">
+                <input type="checkbox" name="client-approval" value="Yes">
+                <em>I would like to proceed with the services selected above.</em>
+              </label>
+            </div>
+          </div>
+
+          <p class="form-submit-row"><button type="submit" class="button" id="sendFormBtn">Send Form</button></p>
+
                     <details class="terms-dropdown custom-terms">
                       <summary class="terms-title lazydog custom-terms-summary">
                         <span class="custom-terms-icon"></span>
@@ -190,5 +355,68 @@
           <p>© <strong>WHO'S JULIAN? <span class="brand-films">FILMS</span></strong> — Brisbane & Goldcoast Australia</p>
       </div>
     </footer>
+  <script>
+    (function () {
+      var form = document.getElementById('clientProjectForm');
+      var modal = document.getElementById('confirmModal');
+      var cancelBtn = document.getElementById('confirmCancel');
+      var confirmBtn = document.getElementById('confirmSend');
+      var additionalCoverageCheck = document.getElementById('additionalCoverageCheck');
+      var additionalHoursRow = document.getElementById('additionalHoursRow');
+
+      if (additionalCoverageCheck) {
+        additionalCoverageCheck.addEventListener('change', function () {
+          additionalHoursRow.style.display = this.checked ? 'block' : 'none';
+        });
+      }
+
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          modal.classList.add('active');
+        });
+      }
+
+      if (cancelBtn) {
+        cancelBtn.addEventListener('click', function () {
+          modal.classList.remove('active');
+        });
+      }
+
+      if (modal) {
+        modal.addEventListener('click', function (e) {
+          if (e.target === modal) {
+            modal.classList.remove('active');
+          }
+        });
+      }
+
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', function () {
+          modal.classList.remove('active');
+          confirmBtn.disabled = true;
+          confirmBtn.textContent = 'Sending…';
+
+          fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(new FormData(form)).toString()
+          }).then(function (response) {
+            if (response.ok) {
+              form.innerHTML = '<div class="form-success"><h3>Form Sent!</h3><p>Thank you for your enquiry. We\'ll be in touch shortly at the email address you provided.</p></div>';
+            } else {
+              confirmBtn.disabled = false;
+              confirmBtn.textContent = 'Confirm & Send';
+              alert('There was an issue sending your form. Please try again or email us directly at whosjulianfilms@gmail.com');
+            }
+          }).catch(function () {
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = 'Confirm & Send';
+            alert('There was an issue sending your form. Please try again or email us directly at whosjulianfilms@gmail.com');
+          });
+        });
+      }
+    })();
+  </script>
   </body>
 </html>

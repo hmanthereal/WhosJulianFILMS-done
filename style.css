@@ -592,6 +592,35 @@ h1,h2,h3{margin:0;color:inherit;font-family:'BoulderLocal', 'Playfair Display', 
 .contact-form label{display:block;margin-bottom:12px}
 .contact-form input,.contact-form textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
 
+/* Client Project Form */
+.client-project-form .form-section{background:var(--section-light-bg);border-radius:10px;padding:20px 22px;margin-bottom:14px}
+.form-section-header.lazydog{font-family:'LazyDog' !important;font-size:1.35em;color:var(--accent-orange);font-weight:700;margin:0 0 14px 0;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.form-row-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:600px){.form-row-two{grid-template-columns:1fr}}
+.form-check-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.form-check-row:last-of-type{border-bottom:none}
+.form-check-label{display:flex !important;align-items:center;gap:10px;cursor:pointer;font-size:1em;color:#e9eef2;flex:1;margin-bottom:0 !important}
+.form-check-label input[type="checkbox"]{width:18px !important;height:18px !important;flex-shrink:0;cursor:pointer;accent-color:var(--accent-orange)}
+.form-price{color:var(--accent-orange);font-weight:600;font-size:0.88em;white-space:nowrap;margin-left:14px}
+.form-additional-hours{display:none;padding-top:10px}
+.approval-check-row{justify-content:flex-start}
+.approval-check-row .form-check-label em{font-style:italic;color:var(--muted)}
+.bot-field-wrapper{display:none}
+.form-submit-row{margin-top:20px}
+
+/* Confirmation Modal */
+.confirm-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px}
+.confirm-modal-overlay.active{display:flex}
+.confirm-modal{background:#1b1b1d;border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:32px;max-width:440px;width:100%;box-shadow:0 28px 70px rgba(0,0,0,0.65)}
+.confirm-modal h3{font-family:'BoulderLocal','Playfair Display',serif !important;color:#fff;font-size:1.55em;margin:0 0 12px}
+.confirm-modal p{color:var(--muted);margin:0 0 26px;line-height:1.65}
+.confirm-modal-actions{display:flex;gap:12px;justify-content:flex-end}
+
+/* Form success state */
+.form-success{background:var(--section-light-bg);border-radius:10px;padding:36px;text-align:center}
+.form-success h3{font-family:'BoulderLocal','Playfair Display',serif !important;color:#3ecf4a;font-size:1.8em;margin:0 0 12px}
+.form-success p{color:var(--muted);line-height:1.65;margin:0}
+
 .vis{position:absolute!important;clip:rect(1px,1px,1px,1px);padding:0!important;border:0!important;height:1px!important;width:1px!important;overflow:hidden}
 
 /* Footer */
