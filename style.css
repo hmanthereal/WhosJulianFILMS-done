@@ -849,16 +849,23 @@ h1,h2,h3{margin:0;color:inherit;font-family:'BoulderLocal', 'Playfair Display', 
   letter-spacing: 0.5px;
 }
 
-/* Prevent scrolling past the footer on mobile */
+/* Mobile scroll: single native document scroller.
+   The page scrolls on the document itself (not a fixed-height inner box),
+   so iOS keeps native edge bounce/elasticity and pull-to-refresh works.
+   The fixed sidebar stays out of this flow, so there is still only one
+   vertical scroll context and no second scrollbar. */
 @media (max-width: 600px) {
   html, body {
-    height: 100vh !important;
-    min-height: 100vh !important;
-    overflow-y: auto;
-    overscroll-behavior-y: contain;
+    height: auto;             /* grow with content; no clipped inner scroller */
+    min-height: 100%;
+    overscroll-behavior-y: auto;        /* restore bounce + pull-to-refresh */
+    -webkit-overflow-scrolling: touch;  /* iOS momentum scrolling */
+  }
+  body {
+    overflow-y: visible;      /* body is not a separate scroll container */
   }
   main {
-    min-height: calc(100vh - 80px); /* Adjust 80px to your footer height */
+    min-height: calc(100vh - 80px); /* fill viewport so footer sits at bottom, no blank space */
     box-sizing: border-box;
   }
   .site-footer {
