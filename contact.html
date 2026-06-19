@@ -44,7 +44,7 @@
           <p><strong>Phone</strong> <span class="contact-name">Harry:</span> <a href="tel:0490765145">0490 765 145</a></p>
           <p><strong>Phone</strong> <span class="contact-name">Noah:</span> <a href="tel:123456789">0490 756 229</a></p>
         </div>
-        <h2 class="enquire-title lazydog">Client Project Form</h2>
+        <h2 class="enquire-title lazydog">Project Enquiry Form</h2>
 
         <!-- Confirmation Modal -->
         <div class="confirm-modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
@@ -205,17 +205,6 @@
               <span class="vis">Additional Notes</span>
               <textarea name="additional-notes" rows="3" placeholder="Anything extra you'd like to add on top of the services selected above..."></textarea>
             </label>
-          </div>
-
-          <!-- CLIENT APPROVAL -->
-          <div class="form-section">
-            <h3 class="form-section-header lazydog">Client Approval</h3>
-            <div class="form-check-row approval-check-row">
-              <label class="form-check-label">
-                <input type="checkbox" name="client-approval" value="Yes">
-                <em>I would like to proceed with the services selected above.</em>
-              </label>
-            </div>
           </div>
 
           <p class="form-submit-row"><button type="submit" class="button" id="sendFormBtn">Send Form</button></p>
@@ -393,19 +382,29 @@
           confirmBtn.disabled = true;
           confirmBtn.textContent = 'Sending…';
 
+          var body = new URLSearchParams(new FormData(form)).toString();
+          console.log('[contact-form] Submitting to "/" with body:', body);
+
           fetch('/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(new FormData(form)).toString()
+            body: body
           }).then(function (response) {
+            console.log('[contact-form] Response status:', response.status, response.statusText);
             if (response.ok) {
+              console.log('[contact-form] Submission succeeded.');
               form.innerHTML = '<div class="form-success"><h3>Form Sent!</h3><p>Thank you for your enquiry. We\'ll be in touch shortly at the email address you provided.</p></div>';
-            } else {
+              return;
+            }
+            // Surface the server response body to help diagnose the failure.
+            return response.text().then(function (text) {
+              console.error('[contact-form] Submission failed. Status:', response.status, response.statusText, 'Body:', text);
               confirmBtn.disabled = false;
               confirmBtn.textContent = 'Confirm & Send';
               alert('There was an issue sending your form. Please try again or email us directly at whosjulianfilms@gmail.com');
-            }
-          }).catch(function () {
+            });
+          }).catch(function (error) {
+            console.error('[contact-form] Network/fetch error during submission:', error);
             confirmBtn.disabled = false;
             confirmBtn.textContent = 'Confirm & Send';
             alert('There was an issue sending your form. Please try again or email us directly at whosjulianfilms@gmail.com');
