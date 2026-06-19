@@ -722,7 +722,7 @@ h1,h2,h3{margin:0;color:inherit;font-family:'BoulderLocal', 'Playfair Display', 
     padding: 20px 8px;
     background: var(--section-dark-bg);
     z-index: 100;
-    height: 100vh !important;
+    height: 100dvh !important;
   }
 }
 
@@ -849,16 +849,28 @@ h1,h2,h3{margin:0;color:inherit;font-family:'BoulderLocal', 'Playfair Display', 
   letter-spacing: 0.5px;
 }
 
-/* Prevent scrolling past the footer on mobile */
+/* Mobile scroll model: a single vertical scroll container.
+   The root (html) is the only scroller — exactly like desktop — so there is
+   never a second nested scroll context. The fixed sidebar stays put while
+   main + footer flow and scroll together as one page. */
 @media (max-width: 600px) {
-  html, body {
-    height: 100vh !important;
-    min-height: 100vh !important;
-    overflow-y: auto;
-    overscroll-behavior-y: contain;
+  html {
+    /* Keep html as the single scroll container (overflow-y:auto inherited from
+       the base rule). Use the dynamic viewport so the URL bar showing/hiding
+       does not change the usable height, and stop rubber-band overscroll from
+       exposing blank space below the content. */
+    height: 100dvh;
+    overscroll-behavior-y: none;
+  }
+  body {
+    /* Body is NOT a scroll container: it simply grows with its content and the
+       root scrolls it. Only its minimum height is pinned to the small viewport
+       so short pages still fill the screen. */
+    min-height: 100svh;
+    overscroll-behavior-y: none;
   }
   main {
-    min-height: calc(100vh - 80px); /* Adjust 80px to your footer height */
+    min-height: calc(100svh - 80px); /* footer is ~80px tall */
     box-sizing: border-box;
   }
   .site-footer {
