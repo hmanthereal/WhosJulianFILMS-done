@@ -58,7 +58,7 @@
           </div>
         </div>
 
-        <form class="contact-form client-project-form" name="client-project-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="clientProjectForm">
+        <form class="contact-form client-project-form" name="client-project-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you" id="clientProjectForm">
           <input type="hidden" name="form-name" value="client-project-form" />
           <p class="bot-field-wrapper"><label>Do not fill this out: <input name="bot-field" /></label></p>
 
@@ -207,7 +207,7 @@
             </label>
           </div>
 
-          <p class="form-submit-row"><button type="submit" class="button" id="sendFormBtn">Send Form</button></p>
+          <p class="form-submit-row"><button type="button" class="button" id="sendFormBtn">Send Form</button></p>
 
                     <details class="terms-dropdown custom-terms">
                       <summary class="terms-title lazydog custom-terms-summary">
@@ -344,6 +344,7 @@
     (function () {
       var form = document.getElementById('clientProjectForm');
       var modal = document.getElementById('confirmModal');
+      var sendBtn = document.getElementById('sendFormBtn');
       var cancelBtn = document.getElementById('confirmCancel');
       var confirmBtn = document.getElementById('confirmSend');
       var additionalCoverageCheck = document.getElementById('additionalCoverageCheck');
@@ -355,9 +356,14 @@
         });
       }
 
-      if (form) {
-        form.addEventListener('submit', function (e) {
-          e.preventDefault();
+      // "Send Form" is a plain button: run native field validation, then open the
+      // confirmation modal. It never submits the form itself, so there is no
+      // submit-event interception and no preventDefault().
+      if (sendBtn && form && modal) {
+        sendBtn.addEventListener('click', function () {
+          if (typeof form.reportValidity === 'function' && !form.reportValidity()) {
+            return;
+          }
           modal.classList.add('active');
         });
       }
@@ -376,39 +382,13 @@
         });
       }
 
-      if (confirmBtn) {
+      // Confirming triggers a native browser POST to the form's action. Netlify's
+      // form handler intercepts this server-side and redirects to /thank-you.
+      if (confirmBtn && form) {
         confirmBtn.addEventListener('click', function () {
-          modal.classList.remove('active');
           confirmBtn.disabled = true;
           confirmBtn.textContent = 'Sending…';
-
-          var body = new URLSearchParams(new FormData(form)).toString();
-          console.log('[contact-form] Submitting to "/" with body:', body);
-
-          fetch('/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: body
-          }).then(function (response) {
-            console.log('[contact-form] Response status:', response.status, response.statusText);
-            if (response.ok) {
-              console.log('[contact-form] Submission succeeded.');
-              form.innerHTML = '<div class="form-success"><h3>Form Sent!</h3><p>Thank you for your enquiry. We\'ll be in touch shortly at the email address you provided.</p></div>';
-              return;
-            }
-            // Surface the server response body to help diagnose the failure.
-            return response.text().then(function (text) {
-              console.error('[contact-form] Submission failed. Status:', response.status, response.statusText, 'Body:', text);
-              confirmBtn.disabled = false;
-              confirmBtn.textContent = 'Confirm & Send';
-              alert('There was an issue sending your form. Please try again or email us directly at whosjulianfilms@gmail.com');
-            });
-          }).catch(function (error) {
-            console.error('[contact-form] Network/fetch error during submission:', error);
-            confirmBtn.disabled = false;
-            confirmBtn.textContent = 'Confirm & Send';
-            alert('There was an issue sending your form. Please try again or email us directly at whosjulianfilms@gmail.com');
-          });
+          form.submit();
         });
       }
     })();
