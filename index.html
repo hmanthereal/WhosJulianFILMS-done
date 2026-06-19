@@ -43,18 +43,18 @@
       <div class="grid-container">
         <div class="grid">
           <div class="grid-item large" style="background-image:url('Images/WEB PIC 1.png');background-size:cover;background-position:center;"></div>
-          <a class="grid-item" href="about.html" style="background-image:url('Images/harryandnoah.jpg');background-size:cover;background-position:center;"><span class="grid-label">ABOUT US</span></a>
+          <div class="grid-item" data-link="about.html" role="link" tabindex="0" aria-label="ABOUT US" style="background-image:url('Images/harryandnoah.jpg');background-size:cover;background-position:center;"><span class="grid-label">ABOUT US</span></div>
           <div class="grid-item" style="background-image:url('Images/WEB PIC 14.png');background-size:cover;background-position:center;"></div>
           <div class="grid-item wide" style="background-image:url('Images/WEB PIC 8.png');background-size:cover;background-position:center;"></div>
           <div class="grid-item tall" style="background-image:url('Images/WEB PIC 4.png');background-size:cover;background-position:center;"></div>
-          <a class="grid-item" href="works.html"><span class="grid-label">OUR WORKS</span></a>
+          <div class="grid-item" data-link="works.html" role="link" tabindex="0" aria-label="OUR WORKS" style="background-image:url('Images/WEB PIC 3.png');background-size:cover;background-position:center;"><span class="grid-label">OUR WORKS</span></div>
           <div class="grid-item" style="background-image:url('Images/WEB PIC 18.png');background-size:cover;background-position:center;"></div>
           <div class="grid-item large" style="background-image:url('Images/WEB PIC 2.png');background-size:cover;background-position:center;"></div>
-          <a class="grid-item" href="services.html" style="background-image:url('Images/caerma photo.HEIC');background-size:cover;background-position:center;"><span class="grid-label">SERVICES</span></a>
+          <div class="grid-item" data-link="services.html" role="link" tabindex="0" aria-label="SERVICES" style="background-image:url('Images/WEB PIC 5.png');background-size:cover;background-position:center;"><span class="grid-label">SERVICES</span></div>
           <div class="grid-item" style="background-image:url('Images/WEB PIC 10.png');background-size:cover;background-position:77%;"></div>
           <div class="grid-item wide" style="background-image:url('Images/WEB PIC 6.png');background-size:cover;background-position:center;"></div>
           <div class="grid-item" style="background-image:url('Images/WEB PIC 20.png');background-size:cover;background-position:left;"></div>
-          <a class="grid-item" href="contact.html"><span class="grid-label">CONTACT US</span></a>
+          <div class="grid-item" data-link="contact.html" role="link" tabindex="0" aria-label="CONTACT US" style="background-image:url('Images/WEB PIC 11.png');background-size:cover;background-position:center;"><span class="grid-label">CONTACT US</span></div>
           <div class="grid-item tall" style="background-image:url('Images/WEB PIC 15.png');background-size:cover;background-position:center;"></div>
           <div class="grid-item tall" style="background-image:url('Images/WEB PIC 22.png');background-size:cover;background-position:center;"></div>
           <div class="grid-item" style="background-image:url('Images/WEB PIC 20.png');background-size:cover;background-position:right;"></div>
@@ -89,6 +89,91 @@
           <p>© <strong>WHO'S JULIAN? <span class="brand-films">FILMS</span></strong> — Brisbane & Goldcoast Australia</p>
       </div>
     </footer>
-    <script src="script.js"></script>
+    <script>
+      // Progressive AVIF enhancement for grid tiles.
+      // Direct static paths only — no Netlify image transforms, no rewrites.
+      // A tile's background is swapped to an .avif sibling ONLY when the browser
+      // supports AVIF AND the .avif file actually loads (200). If AVIF is
+      // unsupported or the file is missing, the original png/jpg/jpeg/heic is
+      // left untouched, so layout and styling never break.
+      document.addEventListener('DOMContentLoaded', function () {
+        // Feature-detect AVIF decode support with a tiny 1x1 AVIF.
+        var probe = new Image();
+        probe.onload = probe.onerror = function () {
+          if (probe.width > 0 && probe.height > 0) swapGridBackgrounds();
+        };
+        probe.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAEAAAABAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIABoAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgABogQEDQgMgkQAAAAB8dSLfI=';
+
+        function swapGridBackgrounds() {
+          // Every grid tile with an inline background-image is eligible, including
+          // the four labelled selection tiles (ABOUT US / OUR WORKS / SERVICES /
+          // CONTACT US). They are non-clickable <div> tiles and are treated
+          // exactly like the rest: the preflight below keeps their original
+          // png/jpg source whenever an .avif sibling is missing or fails to load.
+          var tiles = document.querySelectorAll('.grid-item[style*="background-image"]');
+          tiles.forEach(function (el) {
+            // Work only from this tile's own inline background-image. el.style
+            // .backgroundImage holds just the image layer, so reading and
+            // re-assigning it never touches background-size, background-position,
+            // or any other declared style. All grid tiles are plain <div>
+            // elements, so anchors are never involved.
+            var bg = el.style.backgroundImage;
+            // Guard: skip empty, null, or non-image ("none") backgrounds.
+            if (!bg || bg === 'none') return;
+            // Pull the path out of url(...) safely: tolerate single/double/no
+            // quotes and whitespace, and require at least one real character so
+            // an empty url() can never match.
+            var match = bg.match(/url\(\s*(['"]?)([^'")]+)\1\s*\)/i);
+            if (!match) return;
+            var path = match[2].trim();
+            // Guard: never act on a corrupted value. Reject empty paths and any
+            // string carrying the Unicode replacement character (U+FFFD) or
+            // control bytes — the exact class of value that produced the
+            // /%EF%BF%BD request.
+            if (!path || /[\uFFFD\u0000-\u001F]/.test(path)) return;
+            // Only upgrade raster sources that may ship an .avif sibling.
+            if (!/\.(png|jpe?g|heic)$/i.test(path)) return;
+            // Build the sibling path by swapping only the extension.
+            var avifPath = path.replace(/\.(png|jpe?g|heic)$/i, '.avif');
+
+            // Preflight: swap only after the .avif is confirmed to both load
+            // (no 404) and decode to real pixels. On any failure the authored
+            // jpg/png style is left exactly as-is, so a tile can never be blanked.
+            var test = new Image();
+            test.onload = function () {
+              if (!test.naturalWidth || !test.naturalHeight) return;
+              // Write back a freshly built, well-formed url() rather than string-
+              // replacing inside the original value, so a malformed or partial
+              // URL can never be assigned.
+              el.style.backgroundImage = 'url("' + avifPath + '")';
+            };
+            test.onerror = function () { /* keep original jpg/png as fallback */ };
+            test.src = avifPath;
+          });
+        }
+      });
+    </script>
+    <script>
+      // Tile navigation — independent of the AVIF enhancement above.
+      // Only the four labelled selection tiles carry a data-link attribute, so
+      // this never touches background images or any other grid tile. Activating
+      // a tile (click, or keyboard Enter/Space) navigates to its data-link.
+      document.addEventListener('DOMContentLoaded', function () {
+        var linkTiles = document.querySelectorAll('.grid-item[data-link]');
+        linkTiles.forEach(function (el) {
+          function navigate() {
+            var dest = el.dataset.link;
+            if (dest) window.location.href = dest;
+          }
+          el.addEventListener('click', navigate);
+          el.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+              e.preventDefault(); // stop Space from scrolling the page
+              navigate();
+            }
+          });
+        });
+      });
+    </script>
   </body>
 </html>

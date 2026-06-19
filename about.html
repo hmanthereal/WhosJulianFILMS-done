@@ -57,5 +57,64 @@ We’re proud of where we started, excited about where we’re going, and commit
           <p>© <strong>WHO'S JULIAN? <span class="brand-films">FILMS</span></strong> — Brisbane & Goldcoast Australia</p>
       </div>
     </footer>
+    <script>
+      // Progressive AVIF enhancement for grid tiles.
+      // Direct static paths only — no Netlify image transforms, no rewrites.
+      // A tile's background is swapped to an .avif sibling ONLY when the browser
+      // supports AVIF AND the .avif file actually loads (200). If AVIF is
+      // unsupported or the file is missing, the original png/jpg/jpeg/heic is
+      // left untouched, so layout and styling never break.
+      document.addEventListener('DOMContentLoaded', function () {
+        // Feature-detect AVIF decode support with a tiny 1x1 AVIF.
+        var probe = new Image();
+        probe.onload = probe.onerror = function () {
+          if (probe.width > 0 && probe.height > 0) swapGridBackgrounds();
+        };
+        probe.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAEAAAABAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIABoAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgABogQEDQgMgkQAAAAB8dSLfI=';
+
+        function swapGridBackgrounds() {
+          var tiles = document.querySelectorAll('.grid-item[style*="background-image"]');
+          tiles.forEach(function (el) {
+            // Work only from this tile's own inline background-image. el.style
+            // .backgroundImage holds just the image layer, so reading and
+            // re-assigning it never touches background-size, background-position,
+            // or any other declared style — and anchor tiles
+            // (<a class="grid-item">) behave the same as div tiles.
+            var bg = el.style.backgroundImage;
+            // Guard: skip empty, null, or non-image ("none") backgrounds.
+            if (!bg || bg === 'none') return;
+            // Pull the path out of url(...) safely: tolerate single/double/no
+            // quotes and whitespace, and require at least one real character so
+            // an empty url() can never match.
+            var match = bg.match(/url\(\s*(['"]?)([^'")]+)\1\s*\)/i);
+            if (!match) return;
+            var path = match[2].trim();
+            // Guard: never act on a corrupted value. Reject empty paths and any
+            // string carrying the Unicode replacement character (U+FFFD) or
+            // control bytes — the exact class of value that produced the
+            // /%EF%BF%BD request.
+            if (!path || /[\uFFFD\u0000-\u001F]/.test(path)) return;
+            // Only upgrade raster sources that may ship an .avif sibling.
+            if (!/\.(png|jpe?g|heic)$/i.test(path)) return;
+            // Build the sibling path by swapping only the extension.
+            var avifPath = path.replace(/\.(png|jpe?g|heic)$/i, '.avif');
+
+            // Preflight: swap only after the .avif is confirmed to both load
+            // (no 404) and decode to real pixels. On any failure the authored
+            // jpg/png style is left exactly as-is, so a tile can never be blanked.
+            var test = new Image();
+            test.onload = function () {
+              if (!test.naturalWidth || !test.naturalHeight) return;
+              // Write back a freshly built, well-formed url() rather than string-
+              // replacing inside the original value, so a malformed or partial
+              // URL can never be assigned.
+              el.style.backgroundImage = 'url("' + avifPath + '")';
+            };
+            test.onerror = function () { /* keep original jpg/png as fallback */ };
+            test.src = avifPath;
+          });
+        }
+      });
+    </script>
   </body>
 </html>
