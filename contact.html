@@ -73,8 +73,8 @@
               <label><span class="vis">Phone</span><input type="tel" name="phone" placeholder="Your phone number"></label>
             </div>
             <div class="form-row-two">
-              <label><span class="vis">Project Date(s)</span><input type="text" name="project-dates" placeholder="e.g. 15 July 2026"></label>
-              <label><span class="vis">Preferred Delivery Date</span><input type="text" name="delivery-date" placeholder="e.g. 30 July 2026"></label>
+              <label><span class="vis">Shoot date(s)</span><input type="text" name="project-dates" placeholder="Shoot date(s)"></label>
+              <label><span class="vis">Preferred Delivery Date</span><input type="text" name="delivery-date" placeholder="Preferred Delivery Date" onfocus="this.type='date'" onblur="if(!this.value){this.type='text'}"></label>
             </div>
           </div>
 
@@ -198,16 +198,12 @@
             </label>
           </div>
 
-          <!-- QUOTE SUMMARY -->
+          <!-- ADDITIONAL NOTES -->
           <div class="form-section">
-            <h3 class="form-section-header lazydog">Quote Summary</h3>
+            <h3 class="form-section-header lazydog">Additional Notes</h3>
             <label>
-              <span class="vis">Selected Services</span>
-              <textarea name="selected-services" rows="3" placeholder="Summary of selected services..."></textarea>
-            </label>
-            <label>
-              <span class="vis">Estimated Budget (AUD)</span>
-              <input type="text" name="estimated-budget" placeholder="$ e.g. 500">
+              <span class="vis">Additional Notes</span>
+              <textarea name="additional-notes" rows="3" placeholder="Anything extra you'd like to add on top of the services selected above..."></textarea>
             </label>
           </div>
 
