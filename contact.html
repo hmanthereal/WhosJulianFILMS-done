@@ -78,7 +78,7 @@
         </div>
         <h2 class="enquire-title lazydog">Project Enquiry Form</h2>
 
-        <form class="contact-form" name="project-enquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact?success=true" id="enquiryForm">
+        <form name="project-enquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact/?submitted=true" class="contact-form" id="enquiryForm">
           <input type="hidden" name="form-name" value="project-enquiry-form" />
           <p class="bot-field-wrapper"><label>Do not fill this out: <input name="bot-field" /></label></p>
 
@@ -383,27 +383,28 @@
       }
     })();
 
-    // Submit handling: confirm before sending, then let the browser submit the
-    // form NATIVELY to Netlify Forms (a normal full-page POST). No fetch/AJAX.
-    // Netlify's form middleware intercepts the POST and redirects back to the
-    // form's action (/contact?success=true), where the thank-you popup below
-    // is shown. Native submission is what avoids the 405 the AJAX POST hit.
+    // Submit handling: an OPTIONAL confirm dialog, then let the browser submit
+    // the form NATIVELY to Netlify Forms (a normal full-page POST). No fetch,
+    // no XHR, no custom endpoint. Netlify's form middleware intercepts the POST
+    // and redirects back to the form's action (/contact/?submitted=true), where
+    // the thank-you popup below is shown. Native submission is what makes this
+    // work reliably on the published site.
     (function () {
       var form = document.getElementById('enquiryForm');
       if (!form) return;
 
       form.addEventListener('submit', function (e) {
         if (!confirm('Are you sure you want to send this enquiry?')) {
-          // Cancelled: stop the submission and stay on the page.
+          // Cancel only: stop the submission and stay on the page.
           e.preventDefault();
           return;
         }
-        // Confirmed: do NOT preventDefault — allow the native POST to proceed.
+        // OK: do NOT preventDefault — allow the native POST to proceed.
       });
     })();
 
     // Thank-you popup: after a successful native submission Netlify redirects
-    // to /contact?success=true, so detect that query param on page load.
+    // to /contact/?submitted=true, so detect that query param on page load.
     (function () {
       var popup = document.getElementById('thankYouPopup');
       var closeBtn = document.getElementById('thankYouClose');
@@ -415,7 +416,7 @@
       }
 
       var params = new URLSearchParams(window.location.search);
-      if (popup && params.get('success') === 'true') {
+      if (popup && params.get('submitted') === 'true') {
         popup.style.display = 'flex';
         // Strip the query param so a refresh doesn't reopen the popup.
         if (window.history && window.history.replaceState) {
