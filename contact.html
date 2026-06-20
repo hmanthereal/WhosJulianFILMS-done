@@ -3,43 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Contact | Who's Julian? Films</title>
+    <title>Contact Us | Who's Julian? Films</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <!--
-      Hidden fallback form for Netlify build-time detection only.
-      It guarantees Netlify registers "project-enquiry-form" (and every field
-      name) at deploy time even though the visible form reveals some inputs
-      dynamically. Not shown to users; never submitted.
-    -->
-    <form name="project-enquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
-      <input type="hidden" name="form-name" value="project-enquiry-form" />
-      <input name="bot-field" />
-      <input name="client-name" />
-      <input name="business-name" />
-      <input name="email" />
-      <input name="phone" />
-      <input name="project-dates" />
-      <input name="delivery-date" />
-      <input name="video-standard-editing" />
-      <input name="video-rush-editing" />
-      <input name="video-quarter-day" />
-      <input name="video-half-day" />
-      <input name="video-full-day" />
-      <input name="video-additional-coverage" />
-      <input name="additional-hours" />
-      <input name="pkg-social-media" />
-      <input name="pkg-event-highlight" />
-      <input name="pkg-promotional-video" />
-      <input name="svc-drone" />
-      <input name="svc-revisions" />
-      <input name="svc-travel" />
-      <textarea name="project-description"></textarea>
-      <textarea name="deliverables"></textarea>
-      <textarea name="additional-notes"></textarea>
-    </form>
     <aside id="sidebar">
       <div class="sidebar-segments">
         <div class="sidebar-logo-segment">
@@ -70,288 +38,97 @@
     </aside>
     <main>
       <div class="contact-container">
-        <h1 class="contact-title">Contact Us</h1>
+        <h1>Contact Us</h1>
+
+        <!-- Success message: shown only when the URL contains ?submitted=true -->
+        <p id="thank-you-message" style="display:none;">
+          Thank you! Your enquiry has been submitted.
+        </p>
+
+        <p class="lead">Have a project in mind? We'd love to hear from you. Reach out through
+          any of our channels below, or send us the details using the enquiry form.</p>
+
         <div class="contact-info">
-          <p><strong>Email:</strong> <a href="mailto:whosjulianfilms@gmail.com">whosjulianfilms@gmail.com</a></p>
-          <p><strong>Phone</strong> <span class="contact-name">Harry:</span> <a href="tel:0490765145">0490 765 145</a></p>
-          <p><strong>Phone</strong> <span class="contact-name">Noah:</span> <a href="tel:123456789">0490 756 229</a></p>
+          <p><span class="contact-name">Harry</span> &amp; <span class="contact-name">Noah</span> — Brisbane &amp; Goldcoast, Australia</p>
+          <p><strong>Instagram:</strong> <a href="https://www.instagram.com/whoisjulianfilms/" target="_blank">@whoisjulianfilms</a></p>
+          <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@WhosJulianFilms" target="_blank">Who's Julian Films</a></p>
+          <p><strong>Facebook:</strong> <a href="https://www.facebook.com/profile.php?id=61583416790067" target="_blank">Who's Julian Films</a></p>
         </div>
-        <h2 class="enquire-title lazydog">Project Enquiry Form</h2>
 
-        <form name="project-enquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact.html?submitted=true" class="contact-form" id="enquiryForm">
+        <h2 class="enquire-title lazydog">Enquire Now</h2>
+
+        <form
+          class="contact-form"
+          name="project-enquiry-form"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          action="/contact.html?submitted=true"
+        >
           <input type="hidden" name="form-name" value="project-enquiry-form" />
-          <p class="bot-field-wrapper"><label>Do not fill this out: <input name="bot-field" /></label></p>
 
-          <!-- Client Information -->
-          <div class="form-section">
-            <div class="form-row-two">
-              <label><span class="vis">Client Name *</span><input type="text" name="client-name" placeholder="Your full name" required></label>
-              <label><span class="vis">Business Name</span><input type="text" name="business-name" placeholder="Your business name"></label>
-            </div>
-            <div class="form-row-two">
-              <label><span class="vis">Email *</span><input type="email" name="email" placeholder="you@email.com" required></label>
-              <label><span class="vis">Phone</span><input type="tel" name="phone" placeholder="Your phone number"></label>
-            </div>
-            <div class="form-row-two">
-              <label><span class="vis">Shoot date(s)</span><input type="text" name="project-dates" placeholder="Shoot date(s)"></label>
-              <label><span class="vis">Preferred Delivery Date</span><input type="text" name="delivery-date" placeholder="Preferred Delivery Date" onfocus="this.type='date'" onblur="if(!this.value){this.type='text'}"></label>
-            </div>
-          </div>
+          <!-- Honeypot field: hidden from users, used to catch bots -->
+          <p hidden>
+            <label>Do not fill this out: <input name="bot-field" /></label>
+          </p>
 
-          <!-- VIDEO EDITING -->
-          <div class="form-section">
-            <h3 class="form-section-header lazydog">Video Editing</h3>
-            <div class="form-check-row">
-              <label class="form-check-label">
-                <input type="checkbox" name="video-standard-editing" value="Yes">
-                Standard Editing
-              </label>
-              <span class="form-price">$45 AUD / Hour</span>
-            </div>
-            <div class="form-check-row">
-              <label class="form-check-label">
-                <input type="checkbox" name="video-rush-editing" value="Yes">
-                Rush Editing
-              </label>
-              <span class="form-price">$100 AUD / Hour</span>
-            </div>
-          </div>
-
-          <!-- VIDEOGRAPHY -->
-          <div class="form-section">
-            <h3 class="form-section-header lazydog">Videography</h3>
-            <div class="form-check-row">
-              <label class="form-check-label">
-                <input type="checkbox" name="video-quarter-day" value="Yes">
-                Quarter-Day Coverage (Up to 2 Hours)
-              </label>
-              <span class="form-price">$200 AUD</span>
-            </div>
-            <div class="form-check-row">
-              <label class="form-check-label">
-                <input type="checkbox" name="video-half-day" value="Yes">
-                Half-Day Coverage (Up to 4 Hours)
-              </label>
-              <span class="form-price">$360 AUD</span>
-            </div>
-            <div class="form-check-row">
-              <label class="form-check-label">
-                <input type="checkbox" name="video-full-day" value="Yes">
-                Full-Day Coverage (Up to 8 Hours)
-              </label>
-              <span class="form-price">$680 AUD</span>
-            </div>
-            <div class="form-check-row">
-              <label class="form-check-label">
-                <input type="checkbox" name="video-additional-coverage" value="Yes" id="additionalCoverageCheck">
-                Additional Coverage
-              </label>
-              <span class="form-price">$80 AUD / Hour</span>
-            </div>
-            <div class="form-additional-hours" id="additionalHoursRow">
-              <label><span class="vis">Additional Hours Required</span><input type="number" name="additional-hours" placeholder="Number of hours" min="1"></label>
-            </div>
-          </div>
-
-          <!-- CONTENT PACKAGES -->
-          <div class="form-section">
-            <h3 class="form-section-header lazydog">Content Packages</h3>
-            <div class="form-check-row">
-              <label class="form-check-label">
-                <input type="checkbox" name="pkg-social-media" value="Yes">
-                Social Media Package
-              </label>
-              <span class="form-price">From $300 AUD</span>
-            </div>
-            <div class="form-check-row">
-              <label class="form-check-label">
-                <input type="checkbox" name="pkg-event-highlight" value="Yes">
-                Event Highlight Package
-              </label>
-              <span class="form-price">From $500 AUD</span>
-            </div>
-            <div class="form-check-row">
-              <label class="form-check-label">
-                <input type="checkbox" name="pkg-promotional-video" value="Yes">
-                Promotional Video Package
-              </label>
-              <span class="form-price">From $750 AUD</span>
-            </div>
-          </div>
-
-          <!-- ADDITIONAL SERVICES -->
-          <div class="form-section">
-            <h3 class="form-section-header lazydog">Additional Services</h3>
-            <div class="form-check-row">
-              <label class="form-check-label">
-                <input type="checkbox" name="svc-drone" value="Yes">
-                Drone Operation
-              </label>
-              <span class="form-price">$80 AUD / Hour</span>
-            </div>
-            <div class="form-check-row">
-              <label class="form-check-label">
-                <input type="checkbox" name="svc-revisions" value="Yes">
-                Additional Revisions
-              </label>
-              <span class="form-price">$45 AUD / Hour</span>
-            </div>
-            <div class="form-check-row">
-              <label class="form-check-label">
-                <input type="checkbox" name="svc-travel" value="Yes">
-                Travel Outside Local Area
-              </label>
-              <span class="form-price">Quote on Request</span>
-            </div>
-          </div>
-
-          <!-- PROJECT DETAILS -->
-          <div class="form-section">
-            <h3 class="form-section-header lazydog">Project Details</h3>
-            <label>
-              <span class="vis">Brief Project Description</span>
-              <textarea name="project-description" rows="4" placeholder="Describe your project..."></textarea>
+          <p>
+            <label>Client Name *<br />
+              <input type="text" name="client-name" required />
             </label>
-            <label>
-              <span class="vis">Deliverables Required</span>
-              <textarea name="deliverables" rows="4" placeholder="List the deliverables you need..."></textarea>
+          </p>
+
+          <p>
+            <label>Business Name<br />
+              <input type="text" name="business-name" />
             </label>
-          </div>
+          </p>
 
-          <!-- ADDITIONAL NOTES -->
-          <div class="form-section">
-            <h3 class="form-section-header lazydog">Additional Notes</h3>
-            <label>
-              <span class="vis">Additional Notes</span>
-              <textarea name="additional-notes" rows="3" placeholder="Anything extra you'd like to add on top of the services selected above..."></textarea>
+          <p>
+            <label>Email *<br />
+              <input type="email" name="email" required />
             </label>
-          </div>
+          </p>
 
-          <p class="form-submit-row"><button type="submit" class="button">Send Form</button></p>
+          <p>
+            <label>Phone<br />
+              <input type="tel" name="phone" />
+            </label>
+          </p>
 
-                    <details class="terms-dropdown custom-terms">
-                      <summary class="terms-title lazydog custom-terms-summary">
-                        <span class="custom-terms-icon"></span>
-                        Terms and Conditions
-                      </summary>
-                      <div class="terms-content">
-                        <strong>Last updated: 15/01/2026</strong>
-                        <ul class="terms-list">
-                          <li><strong>When working with Who’s Julian? Films, we aim to provide the utmost convenience, professionalism, and quality.</strong>
-                            <ul>
-                              <li>To ensure a smooth and enjoyable experience for all parties, the following Terms & Conditions outline how we work, what you can expect from us, and what we require from our clients.</li>
-                              <li>By engaging our services, you agree to these terms.</li>
-                            </ul>
-                          </li>
-                          <li><strong>1. Services</strong>
-                            <ul>
-                              <li>'Who’s Julian? Films' provides freelance video production services, which may include (but are not limited to): pre-production planning, filming, directing, cinematography, lighting, audio recording, editing, colour grading, and delivery of final video content.</li>
-                              <li>Specific services, deliverables, timelines, and fees will be agreed upon in writing prior to commencement.</li>
-                            </ul>
-                          </li>
-                          <li><strong>2. Quotes & Booking</strong>
-                            <ul>
-                              <li>All quotes are provided in Australian Dollars (AUD) unless otherwise stated.</li>
-                              <li>Quotes are valid for 14 days from the date issued.</li>
-                              <li>A booking is only confirmed once written acceptance of the quote is received and any required deposit is paid.</li>
-                              <li>'Who’s Julian? Films' reserves the right to decline projects that fall outside agreed scope, availability, or capability.</li>
-                            </ul>
-                          </li>
-                          <li><strong>3. Payment Terms</strong>
-                            <ul>
-                              <li>A deposit (typically 30–50%) may be required to secure a booking.</li>
-                              <li>The remaining balance is due upon completion of the project or upon delivery of the final files, unless otherwise agreed in writing.</li>
-                              <li>Invoices must be paid within 7 days of issue.</li>
-                              <li>Late payments may incur additional fees or result in withholding of final deliverables until payment is received.</li>
-                            </ul>
-                          </li>
-                          <li><strong>4. Cancellations & Rescheduling</strong>
-                            <ul>
-                              <li>Cancellations made more than 7 days prior to the shoot date may receive a refund of the deposit (minus any costs already incurred).</li>
-                              <li>Cancellations within 7 days of the shoot date may forfeit the deposit.</li>
-                              <li>Rescheduling is subject to availability and may incur additional costs.</li>
-                              <li>'Who’s Julian? Films' is not responsible for delays caused by weather, illness, equipment failure beyond reasonable control, or other unforeseen circumstances, though best efforts will be made to reschedule.</li>
-                            </ul>
-                          </li>
-                          <li><strong>5. Client Responsibilities</strong>
-                            <ul>
-                              <li>The client agrees to:</li>
-                              <li>Provide accurate project details, creative direction, and reference materials where required.</li>
-                              <li>Ensure access to locations, talent, permissions, and releases prior to filming.</li>
-                              <li>Obtain all necessary permits, approvals, and clearances unless otherwise agreed.</li>
-                              <li>Ensure a safe working environment during production.</li>
-                            </ul>
-                          </li>
-                          <li><strong>6. Creative Direction & Revisions</strong>
-                            <ul>
-                              <li>Creative decisions are guided by the agreed brief.</li>
-                              <li>One to two rounds of reasonable revisions are typically included (as specified in the quote).</li>
-                              <li>Additional revisions outside the agreed scope may incur extra charges.</li>
-                              <li>Major creative changes requested after production has commenced may require a revised quote.</li>
-                            </ul>
-                          </li>
-                          <li><strong>7. Delivery & Turnaround</strong>
-                            <ul>
-                              <li>Delivery timelines will be discussed and agreed upon prior to the project start.</li>
-                              <li>Turnaround times may vary depending on project scope and client feedback response times.</li>
-                              <li>Final files are typically delivered digitally unless otherwise specified.</li>
-                            </ul>
-                          </li>
-                          <li><strong>8. Ownership & Usage Rights</strong>
-                            <ul>
-                              <li>'Who’s Julian? Films' retains ownership of all raw footage unless otherwise agreed in writing.</li>
-                              <li>Upon full payment, the client is granted a licence to use the final delivered video for agreed purposes (e.g. marketing, social media, website).</li>
-                              <li>Usage beyond the agreed purpose (e.g. paid advertising, broadcast, resale) may require additional licensing fees.</li>
-                              <li>'Who’s Julian? Films' reserves the right to use completed projects for portfolio, website, and promotional purposes unless the client requests otherwise in writing.</li>
-                            </ul>
-                          </li>
-                          <li><strong>9. Music, Assets & Third-Party Content</strong>
-                            <ul>
-                              <li>Licensed music and assets will be used where applicable.</li>
-                              <li>Costs for music licensing or stock assets may be passed on to the client unless included in the quote.</li>
-                              <li>The client is responsible for ensuring they have rights to any materials they provide.</li>
-                            </ul>
-                          </li>
-                          <li><strong>10. Liability</strong>
-                            <ul>
-                              <li>'Who’s Julian? Films' will take reasonable care during production but is not liable for indirect or consequential losses.</li>
-                              <li>Liability is limited to the total amount paid for the services.</li>
-                              <li>The client indemnifies 'Who’s Julian? Films' against claims arising from materials or instructions supplied by the client.</li>
-                            </ul>
-                          </li>
-                          <li><strong>11. Confidentiality</strong>
-                            <ul>
-                              <li>Any confidential information shared during the project will be kept confidential unless disclosure is required by law or agreed otherwise.</li>
-                            </ul>
-                          </li>
-                          <li><strong>12. Termination</strong>
-                            <ul>
-                              <li>Either party may terminate the agreement in writing if the other party breaches these Terms & Conditions. Fees for work completed up to the termination date remain payable.</li>
-                            </ul>
-                          </li>
-                          <li><strong>13. Governing Law</strong>
-                            <ul>
-                              <li>These Terms & Conditions are governed by the laws of Australia. Any disputes will be subject to the jurisdiction of Australian courts.</li>
-                            </ul>
-                          </li>
-                          <li><strong>14. Acceptance</strong>
-                            <ul>
-                              <li>By engaging 'Who’s Julian? Films', you acknowledge that you have read, understood, and agreed to these Terms & Conditions.</li>
-                            </ul>
-                          </li>
-                          <li><strong>Questions</strong>
-                            <ul>
-                              <li>If you have any questions about these Terms & Conditions, please get in touch before commencing a project.</li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </div>
-                    </details>
-          <div class="grid">
-            <div class="grid-item large contact-grid-item">
-              <img src="Images/Logo 1.png" alt="Who's Julian Logo" style="width: 100%; height: 100%; object-fit: contain; display: block; border-radius: 12px;" />
-            </div>
-          </div>
+          <p>
+            <label>Project Date(s)<br />
+              <input type="text" name="project-dates" />
+            </label>
+          </p>
+
+          <p>
+            <label>Delivery Date<br />
+              <input type="text" name="delivery-date" />
+            </label>
+          </p>
+
+          <p>
+            <label>Project Description<br />
+              <textarea name="project-description" rows="4"></textarea>
+            </label>
+          </p>
+
+          <p>
+            <label>Deliverables<br />
+              <textarea name="deliverables" rows="4"></textarea>
+            </label>
+          </p>
+
+          <p>
+            <label>Additional Notes<br />
+              <textarea name="additional-notes" rows="4"></textarea>
+            </label>
+          </p>
+
+          <p class="form-submit-row">
+            <button type="submit" class="button">Submit</button>
+          </p>
         </form>
       </div>
     </main>
@@ -361,49 +138,18 @@
       </div>
     </footer>
 
-    <!-- Thank-you popup: shown after a successful submission. Closable, no redirect. -->
-    <div id="thankYouPopup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
-      <div style="background:#fff;color:#111;max-width:320px;width:90%;padding:24px;border-radius:12px;text-align:center;font-family:Inter,sans-serif;">
-        <p style="margin:0 0 16px;font-size:1rem;">Thanks! Your enquiry has been sent.</p>
-        <button type="button" id="thankYouClose" style="padding:8px 20px;border:0;border-radius:6px;background:#111;color:#fff;cursor:pointer;font-size:0.95rem;">Close</button>
-      </div>
-    </div>
-  <script>
-    // Field-layout only: reveal the "Additional Hours" input when "Additional
-    // Coverage" is checked. No submit handling — the form submits natively to
-    // Netlify Forms via a normal browser POST.
-    (function () {
-      var additionalCoverageCheck = document.getElementById('additionalCoverageCheck');
-      var additionalHoursRow = document.getElementById('additionalHoursRow');
-
-      if (additionalCoverageCheck && additionalHoursRow) {
-        additionalCoverageCheck.addEventListener('change', function () {
-          additionalHoursRow.style.display = this.checked ? 'block' : 'none';
-        });
-      }
-    })();
-
-    // Thank-you popup: after a successful native submission Netlify redirects
-    // to /contact/?submitted=true, so detect that query param on page load.
-    (function () {
-      var popup = document.getElementById('thankYouPopup');
-      var closeBtn = document.getElementById('thankYouClose');
-
-      if (closeBtn && popup) {
-        closeBtn.addEventListener('click', function () {
-          popup.style.display = 'none';
-        });
-      }
-
-      var params = new URLSearchParams(window.location.search);
-      if (popup && params.get('submitted') === 'true') {
-        popup.style.display = 'flex';
-        // Strip the query param so a refresh doesn't reopen the popup.
-        if (window.history && window.history.replaceState) {
-          window.history.replaceState({}, document.title, window.location.pathname);
+    <script>
+      // Display-only: reveal the thank-you message when the page is loaded with
+      // ?submitted=true. This does NOT touch the form's submission behaviour.
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        if (params.get("submitted") === "true") {
+          var message = document.getElementById("thank-you-message");
+          if (message) {
+            message.style.display = "block";
+          }
         }
-      }
-    })();
-  </script>
+      })();
+    </script>
   </body>
 </html>

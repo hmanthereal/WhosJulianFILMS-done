@@ -775,6 +775,26 @@ h1,h2,h3{margin:0;color:inherit;font-family:'BoulderLocal', 'Playfair Display', 
     max-width: 100vw;
     box-sizing: border-box;
   }
+  /* Keep long enquiry-form values (emails, handles, URLs) inside the panel */
+  .contact-container,
+  .contact-info,
+  .contact-info a {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  /* 16px controls stop iOS Safari from auto-zooming (and shifting the page)
+     when a field gains focus on small screens */
+  .contact-form input,
+  .contact-form textarea,
+  .contact-form select {
+    font-size: 16px;
+  }
+  /* Full-width submit gives a comfortable tap target on phones */
+  .contact-form .button {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
 }
 
 /* =====================
