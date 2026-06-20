@@ -78,7 +78,7 @@
         </div>
         <h2 class="enquire-title lazydog">Project Enquiry Form</h2>
 
-        <form class="contact-form client-project-form" name="project-enquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="clientProjectForm">
+        <form class="contact-form" name="project-enquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="clientProjectForm">
           <input type="hidden" name="form-name" value="project-enquiry-form" />
           <p class="bot-field-wrapper"><label>Do not fill this out: <input name="bot-field" /></label></p>
 
@@ -383,9 +383,10 @@
       }
     })();
 
-    // Submit handling: confirm before sending, then POST to Netlify Forms via
-    // fetch("/") using application/x-www-form-urlencoded. Show a closable
-    // thank-you popup on success; a plain alert on failure. No redirect.
+    // Submit handling: confirm before sending, then POST the form's own fields
+    // to Netlify Forms via fetch("/") as application/x-www-form-urlencoded.
+    // Show a closable thank-you popup on success; alert on failure. No redirect.
+    // Temporary debug logs are tagged "[form-debug]" for easy removal later.
     (function () {
       var form = document.getElementById('clientProjectForm');
       var popup = document.getElementById('thankYouPopup');
@@ -397,32 +398,48 @@
         });
       }
 
-      if (form) {
-        form.addEventListener('submit', function (e) {
-          e.preventDefault();
+      if (!form) return;
 
-          if (!confirm('Are you sure you want to send this enquiry?')) {
-            return;
-          }
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-          fetch('/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(new FormData(form)).toString()
-          })
-            .then(function (response) {
-              if (response.ok) {
-                form.reset();
-                if (popup) popup.style.display = 'flex';
-              } else {
-                alert('Sorry, something went wrong. Please try again.');
-              }
-            })
-            .catch(function () {
+        if (!confirm('Are you sure you want to send this enquiry?')) {
+          return;
+        }
+
+        // Build the payload straight from the form element so every field —
+        // including the hidden form-name=project-enquiry-form — is sent exactly
+        // as named. Guard the form-name in case the hidden input is ever missing.
+        var data = new FormData(form);
+        if (!data.get('form-name')) {
+          data.set('form-name', 'project-enquiry-form');
+        }
+        var body = new URLSearchParams(data).toString();
+
+        console.log('[form-debug] submitting form:', data.get('form-name'));
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body
+        })
+          .then(function (response) {
+            console.log('[form-debug] response status:', response.status);
+            if (response.ok) {
+              form.reset();
+              if (popup) popup.style.display = 'flex';
+              return;
+            }
+            return response.text().then(function (text) {
+              console.log('[form-debug] response body:', text);
               alert('Sorry, something went wrong. Please try again.');
             });
-        });
-      }
+          })
+          .catch(function (err) {
+            console.log('[form-debug] network error:', err);
+            alert('Sorry, something went wrong. Please try again.');
+          });
+      });
     })();
   </script>
   </body>
