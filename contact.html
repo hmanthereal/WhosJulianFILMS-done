@@ -8,6 +8,38 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <!--
+      Hidden fallback form for Netlify build-time detection only.
+      It guarantees Netlify registers "project-enquiry-form" (and every field
+      name) at deploy time even though the visible form reveals some inputs
+      dynamically. Not shown to users; never submitted.
+    -->
+    <form name="project-enquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="project-enquiry-form" />
+      <input name="bot-field" />
+      <input name="client-name" />
+      <input name="business-name" />
+      <input name="email" />
+      <input name="phone" />
+      <input name="project-dates" />
+      <input name="delivery-date" />
+      <input name="video-standard-editing" />
+      <input name="video-rush-editing" />
+      <input name="video-quarter-day" />
+      <input name="video-half-day" />
+      <input name="video-full-day" />
+      <input name="video-additional-coverage" />
+      <input name="additional-hours" />
+      <input name="pkg-social-media" />
+      <input name="pkg-event-highlight" />
+      <input name="pkg-promotional-video" />
+      <input name="svc-drone" />
+      <input name="svc-revisions" />
+      <input name="svc-travel" />
+      <textarea name="project-description"></textarea>
+      <textarea name="deliverables"></textarea>
+      <textarea name="additional-notes"></textarea>
+    </form>
     <aside id="sidebar">
       <div class="sidebar-segments">
         <div class="sidebar-logo-segment">
@@ -46,8 +78,8 @@
         </div>
         <h2 class="enquire-title lazydog">Project Enquiry Form</h2>
 
-        <form class="contact-form client-project-form" name="client-project-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="clientProjectForm">
-          <input type="hidden" name="form-name" value="client-project-form" />
+        <form class="contact-form client-project-form" name="project-enquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="clientProjectForm">
+          <input type="hidden" name="form-name" value="project-enquiry-form" />
           <p class="bot-field-wrapper"><label>Do not fill this out: <input name="bot-field" /></label></p>
 
           <!-- Client Information -->
