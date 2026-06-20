@@ -40,10 +40,11 @@
       <div class="contact-container">
         <h1>Contact Us</h1>
 
-        <!-- Success message: shown only when the URL contains ?submitted=true -->
-        <p id="thank-you-message" style="display:none;">
-          Thank you! Your enquiry has been submitted.
-        </p>
+        <!-- Success banner: shown only when the URL contains ?submitted=true -->
+        <div id="success-banner" class="form-success" style="display:none;">
+          <h3>Thank you!</h3>
+          <p>Your enquiry has been submitted. We'll be in touch soon.</p>
+        </div>
 
         <p class="lead">Have a project in mind? We'd love to hear from you. Reach out through
           any of our channels below, or send us the details using the enquiry form.</p>
@@ -57,72 +58,29 @@
 
         <h2 class="enquire-title lazydog">Enquire Now</h2>
 
-        <form
-          class="contact-form"
-          name="project-enquiry-form"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          action="/contact.html?submitted=true"
-        >
-          <input type="hidden" name="form-name" value="project-enquiry-form" />
+        <form name="project-enquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact.html?submitted=true" class="contact-form">
+          <input type="hidden" name="form-name" value="project-enquiry-form">
 
           <!-- Honeypot field: hidden from users, used to catch bots -->
           <p hidden>
-            <label>Do not fill this out: <input name="bot-field" /></label>
+            <label>Do not fill this out: <input name="bot-field"></label>
           </p>
 
           <p>
-            <label>Client Name *<br />
-              <input type="text" name="client-name" required />
+            <label>Name *<br>
+              <input type="text" name="name" required>
             </label>
           </p>
 
           <p>
-            <label>Business Name<br />
-              <input type="text" name="business-name" />
+            <label>Email *<br>
+              <input type="email" name="email" required>
             </label>
           </p>
 
           <p>
-            <label>Email *<br />
-              <input type="email" name="email" required />
-            </label>
-          </p>
-
-          <p>
-            <label>Phone<br />
-              <input type="tel" name="phone" />
-            </label>
-          </p>
-
-          <p>
-            <label>Project Date(s)<br />
-              <input type="text" name="project-dates" />
-            </label>
-          </p>
-
-          <p>
-            <label>Delivery Date<br />
-              <input type="text" name="delivery-date" />
-            </label>
-          </p>
-
-          <p>
-            <label>Project Description<br />
-              <textarea name="project-description" rows="4"></textarea>
-            </label>
-          </p>
-
-          <p>
-            <label>Deliverables<br />
-              <textarea name="deliverables" rows="4"></textarea>
-            </label>
-          </p>
-
-          <p>
-            <label>Additional Notes<br />
-              <textarea name="additional-notes" rows="4"></textarea>
+            <label>Message *<br>
+              <textarea name="message" rows="6" required></textarea>
             </label>
           </p>
 
@@ -139,14 +97,16 @@
     </footer>
 
     <script>
-      // Display-only: reveal the thank-you message when the page is loaded with
-      // ?submitted=true. This does NOT touch the form's submission behaviour.
+      // Display-only: reveal the success banner when the page is loaded with
+      // ?submitted=true after Netlify processes the form POST. This reads
+      // URLSearchParams for banner visibility only and never touches the
+      // form's native submission behaviour.
       (function () {
         var params = new URLSearchParams(window.location.search);
         if (params.get("submitted") === "true") {
-          var message = document.getElementById("thank-you-message");
-          if (message) {
-            message.style.display = "block";
+          var banner = document.getElementById("success-banner");
+          if (banner) {
+            banner.style.display = "block";
           }
         }
       })();
