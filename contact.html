@@ -78,7 +78,7 @@
         </div>
         <h2 class="enquire-title lazydog">Project Enquiry Form</h2>
 
-        <form class="contact-form" name="project-enquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="clientProjectForm">
+        <form class="contact-form" name="project-enquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact?success=true" id="enquiryForm">
           <input type="hidden" name="form-name" value="project-enquiry-form" />
           <p class="bot-field-wrapper"><label>Do not fill this out: <input name="bot-field" /></label></p>
 
@@ -383,12 +383,28 @@
       }
     })();
 
-    // Submit handling: confirm before sending, then POST the form's own fields
-    // to Netlify Forms via fetch("/") as application/x-www-form-urlencoded.
-    // Show a closable thank-you popup on success; alert on failure. No redirect.
-    // Temporary debug logs are tagged "[form-debug]" for easy removal later.
+    // Submit handling: confirm before sending, then let the browser submit the
+    // form NATIVELY to Netlify Forms (a normal full-page POST). No fetch/AJAX.
+    // Netlify's form middleware intercepts the POST and redirects back to the
+    // form's action (/contact?success=true), where the thank-you popup below
+    // is shown. Native submission is what avoids the 405 the AJAX POST hit.
     (function () {
-      var form = document.getElementById('clientProjectForm');
+      var form = document.getElementById('enquiryForm');
+      if (!form) return;
+
+      form.addEventListener('submit', function (e) {
+        if (!confirm('Are you sure you want to send this enquiry?')) {
+          // Cancelled: stop the submission and stay on the page.
+          e.preventDefault();
+          return;
+        }
+        // Confirmed: do NOT preventDefault — allow the native POST to proceed.
+      });
+    })();
+
+    // Thank-you popup: after a successful native submission Netlify redirects
+    // to /contact?success=true, so detect that query param on page load.
+    (function () {
       var popup = document.getElementById('thankYouPopup');
       var closeBtn = document.getElementById('thankYouClose');
 
@@ -398,48 +414,14 @@
         });
       }
 
-      if (!form) return;
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        if (!confirm('Are you sure you want to send this enquiry?')) {
-          return;
+      var params = new URLSearchParams(window.location.search);
+      if (popup && params.get('success') === 'true') {
+        popup.style.display = 'flex';
+        // Strip the query param so a refresh doesn't reopen the popup.
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState({}, document.title, window.location.pathname);
         }
-
-        // Build the payload straight from the form element so every field —
-        // including the hidden form-name=project-enquiry-form — is sent exactly
-        // as named. Guard the form-name in case the hidden input is ever missing.
-        var data = new FormData(form);
-        if (!data.get('form-name')) {
-          data.set('form-name', 'project-enquiry-form');
-        }
-        var body = new URLSearchParams(data).toString();
-
-        console.log('[form-debug] submitting form:', data.get('form-name'));
-
-        fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: body
-        })
-          .then(function (response) {
-            console.log('[form-debug] response status:', response.status);
-            if (response.ok) {
-              form.reset();
-              if (popup) popup.style.display = 'flex';
-              return;
-            }
-            return response.text().then(function (text) {
-              console.log('[form-debug] response body:', text);
-              alert('Sorry, something went wrong. Please try again.');
-            });
-          })
-          .catch(function (err) {
-            console.log('[form-debug] network error:', err);
-            alert('Sorry, something went wrong. Please try again.');
-          });
-      });
+      }
     })();
   </script>
   </body>
