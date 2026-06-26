@@ -58,55 +58,292 @@
     </aside>
     <main>
       <div class="contact-container">
-        <h1>Contact Us</h1>
+        <h1 class="contact-title">Contact Us</h1>
 
-        <!-- Success banner: shown only when the URL contains ?submitted=true -->
-        <div id="success-banner" class="form-success" style="display:none;">
-          <h3>Thank you!</h3>
-          <p>Your enquiry has been submitted. We'll be in touch soon.</p>
+        <div id="form-success" class="form-success form-status" hidden>
+          <h3>Form Sent!</h3>
+          <p>Thank you for your enquiry. We'll be in touch shortly at the email address you provided.</p>
         </div>
 
-        <p class="lead">Have a project in mind? We'd love to hear from you. Reach out through
-          any of our channels below, or send us the details using the enquiry form.</p>
+        <div id="form-error" class="form-error form-status" hidden>
+          <h3>Something went wrong</h3>
+          <p>There was an issue sending your form. Please try again or email us directly at <a href="mailto:whosjulianfilms@gmail.com">whosjulianfilms@gmail.com</a>.</p>
+        </div>
+
+        <p class="lead">Have a project in mind? Reach out through any of our channels below, or send through the details using the project enquiry form.</p>
 
         <div class="contact-info">
           <p><span class="contact-name">Harry</span> &amp; <span class="contact-name">Noah</span> — Brisbane &amp; Gold Coast, Australia</p>
+          <p><strong>Email:</strong> <a href="mailto:whosjulianfilms@gmail.com">whosjulianfilms@gmail.com</a></p>
+          <p><strong>Phone</strong> <span class="contact-name">Harry:</span> <a href="tel:0490765145">0490 765 145</a></p>
+          <p><strong>Phone</strong> <span class="contact-name">Noah:</span> <a href="tel:0490756229">0490 756 229</a></p>
           <p><strong>Instagram:</strong> <a href="https://www.instagram.com/whoisjulianfilms/" target="_blank">@whoisjulianfilms</a></p>
           <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@WhosJulianFilms" target="_blank">Who's Julian Films</a></p>
           <p><strong>Facebook:</strong> <a href="https://www.facebook.com/profile.php?id=61583416790067" target="_blank">Who's Julian Films</a></p>
         </div>
 
-        <h2 class="enquire-title lazydog">Enquire Now</h2>
+        <section class="contact-service-note">
+          <h2 class="enquire-title boulder">PROJECT ENQUIRY FORM</h2>
+          <p>Video production and post-production rates are quoted in AUD and may vary depending on project requirements. Travel outside the local area is quoted on request.</p>
+        </section>
 
-        <form name="project-enquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact.html?submitted=true" class="contact-form">
-          <input type="hidden" name="form-name" value="project-enquiry-form">
+        <form class="contact-form client-project-form" name="client-project-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact.html?submitted=true" id="clientProjectForm" novalidate>
+          <input type="hidden" name="form-name" value="client-project-form">
 
-          <!-- Honeypot field: hidden from users, used to catch bots -->
-          <p hidden>
-            <label>Do not fill this out: <input name="bot-field"></label>
-          </p>
+          <p class="bot-field-wrapper"><label>Do not fill this out: <input name="bot-field"></label></p>
 
-          <p>
-            <label>Name *<br>
-              <input type="text" name="name" required>
-            </label>
-          </p>
+          <div class="form-section">
+            <h3 class="form-section-header boulder accent-purple">Client Information</h3>
+            <div class="form-row-two">
+              <label>First Name *<input type="text" name="client-name" autocomplete="name" placeholder="Your First Name" required data-error="Please enter your name."></label>
+              <label>Business Name<input type="text" name="business-name" autocomplete="organization" placeholder="Your Business Name"></label>
+            </div>
+            <div class="form-row-two">
+              <label>Email *<input type="email" name="email" autocomplete="email" placeholder="Your Email" required data-error="Please enter a valid email address."></label>
+              <label>Phone<input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="Your Phone Number"></label>
+            </div>
+            <div class="form-row-two">
+              <label>Project Location<input type="text" name="location" autocomplete="address-level2" placeholder="Brisbane, Gold Coast, or other location"></label>
+              <label>Shoot Date(s)<input type="text" name="project-dates" placeholder="Preferred date/time or date range"></label>
+            </div>
+            <div class="form-row-two">
+              <label>Preferred Delivery Date<input type="text" name="delivery-date" placeholder="Preferred delivery date" onfocus="this.type='date'" onblur="if(!this.value){this.type='text'}"></label>
+              <label>Budget / Range
+                <select name="budget-range">
+                  <option value="">Select a range, if known</option>
+                  <option value="Under $300 AUD">Under $300 AUD</option>
+                  <option value="$300-$500 AUD">$300-$500 AUD</option>
+                  <option value="$500-$750 AUD">$500-$750 AUD</option>
+                  <option value="$750+ AUD">$750+ AUD</option>
+                  <option value="Quote on request">Quote on request</option>
+                </select>
+              </label>
+            </div>
+          </div>
 
-          <p>
-            <label>Email *<br>
-              <input type="email" name="email" required>
-            </label>
-          </p>
+          <div class="form-section">
+            <h3 class="form-section-header boulder accent-blue">Video Editing</h3>
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox" name="video-standard-editing" value="Yes">Standard Editing</label>
+              <span class="form-price">$45 AUD / hour</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox" name="video-rush-editing" value="Yes">Rush Editing</label>
+              <span class="form-price">$100 AUD / hour</span>
+            </div>
+          </div>
 
-          <p>
-            <label>Message *<br>
-              <textarea name="message" rows="6" required></textarea>
-            </label>
-          </p>
+          <div class="form-section">
+            <h3 class="form-section-header boulder accent-orange">Videography</h3>
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox" name="video-quarter-day" value="Yes">Quarter-Day Coverage (up to 2 hours)</label>
+              <span class="form-price">$200 AUD</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox" name="video-half-day" value="Yes">Half-Day Coverage (up to 4 hours)</label>
+              <span class="form-price">$360 AUD</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox" name="video-full-day" value="Yes">Full-Day Coverage (up to 8 hours)</label>
+              <span class="form-price">$680 AUD</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox" name="video-additional-coverage" value="Yes" id="additionalCoverageCheck">Additional Coverage</label>
+              <span class="form-price">$80 AUD / hour</span>
+            </div>
+            <div class="form-additional-hours" id="additionalHoursRow">
+              <label>Additional Hours Required<input type="number" name="additional-hours" placeholder="Number of hours" min="1"></label>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3 class="form-section-header boulder accent-green">Content Packages</h3>
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox" name="pkg-social-media" value="Yes">Social Media Package</label>
+              <span class="form-price">from $300 AUD</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox" name="pkg-event-highlight" value="Yes">Event Highlight Package</label>
+              <span class="form-price">from $500 AUD</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox" name="pkg-promotional-video" value="Yes">Promotional Video Package</label>
+              <span class="form-price">from $750 AUD</span>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3 class="form-section-header boulder accent-purple">Additional Services</h3>
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox" name="svc-drone" value="Yes">Drone Operation</label>
+              <span class="form-price">$80 AUD / hour</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox" name="svc-revisions" value="Yes">Additional Revisions</label>
+              <span class="form-price">$45 AUD / hour</span>
+            </div>
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox" name="svc-travel" value="Yes">Travel Outside Local Area</label>
+              <span class="form-price">Quote on request</span>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3 class="form-section-header boulder accent-blue">Project Details</h3>
+            <label>Project Brief<textarea name="project-description" rows="5" placeholder="Describe your project and key details."></textarea></label>
+            <label>Deliverables Required<textarea name="deliverables" rows="4" placeholder="List the deliverables you need, such as vertical videos, highlight reels, or platform-ready video content."></textarea></label>
+          </div>
+
+          <div class="form-section">
+            <h3 class="form-section-header boulder accent-orange">Additional Notes</h3>
+            <textarea name="additional-notes" rows="3" placeholder="Anything else you'd like us to know." aria-label="Additional Notes"></textarea>
+          </div>
+
+          <p id="form-validation-message" class="form-validation-message" hidden></p>
 
           <p class="form-submit-row">
-            <button type="submit" class="button">Submit</button>
+            <button type="submit" class="button" id="sendFormBtn">Send Form</button>
           </p>
+
+          <section class="terms-accordion" aria-labelledby="termsAccordionTitle">
+            <button class="terms-accordion__button" type="button" id="termsAccordionTitle" aria-expanded="false" aria-controls="termsAccordionPanel">
+              <span class="terms-accordion__label">Terms &amp; Conditions</span>
+              <span class="terms-accordion__indicator" aria-hidden="true">
+                <span class="terms-accordion__indicator-line"></span>
+                <span class="terms-accordion__indicator-line"></span>
+              </span>
+            </button>
+            <div class="terms-accordion__panel" id="termsAccordionPanel" role="region" aria-labelledby="termsAccordionTitle" hidden>
+              <div class="terms-accordion__content">
+                <h2>Terms &amp; Conditions</h2>
+                <p><strong>Last updated:</strong> 26/06/2026</p>
+                <p>When working with <strong>Who’s Julian? Films</strong>, we aim to provide the utmost convenience, professionalism, and quality. To ensure a smooth and enjoyable experience for all parties, the following Terms &amp; Conditions outline how we work, what you can expect from us, and what we require from our clients. By engaging our services, you agree to these terms.</p>
+
+                <hr>
+
+                <h2>1. Services</h2>
+                <p>Who’s Julian? Films provides freelance video production services, which may include (but are not limited to): pre-production planning, filming, directing, cinematography, lighting, audio recording, editing, colour grading, and delivery of final video content. Specific services, deliverables, timelines, and fees will be agreed upon in writing prior to commencement.</p>
+
+                <hr>
+
+                <h2>2. Quotes &amp; Booking</h2>
+                <ul>
+                  <li>All quotes are provided in Australian Dollars (AUD) unless otherwise stated.</li>
+                  <li>Quotes are valid for 14 days from the date issued.</li>
+                  <li>A booking is only confirmed once written acceptance of the quote is received and any required deposit is paid.</li>
+                  <li>Who’s Julian? Films reserves the right to decline projects that fall outside agreed scope, availability, or capability.</li>
+                </ul>
+
+                <hr>
+
+                <h2>3. Payment Terms</h2>
+                <ul>
+                  <li>A deposit (typically 30–50%) may be required to secure a booking.</li>
+                  <li>The remaining balance is due upon completion of the project or upon delivery of the final files, unless otherwise agreed in writing.</li>
+                  <li>Invoices must be paid within 7 days of issue.</li>
+                  <li>Late payments may incur additional fees or result in withholding of final deliverables until payment is received.</li>
+                </ul>
+
+                <hr>
+
+                <h2>4. Cancellations &amp; Rescheduling</h2>
+                <ul>
+                  <li>Cancellations made more than 7 days prior to the shoot date may receive a refund of the deposit (minus any costs already incurred).</li>
+                  <li>Cancellations within 7 days of the shoot date may forfeit the deposit.</li>
+                  <li>Rescheduling is subject to availability and may incur additional costs.</li>
+                  <li>Who’s Julian? Films is not responsible for delays caused by weather, illness, equipment failure beyond reasonable control, or other unforeseen circumstances, though best efforts will be made to reschedule.</li>
+                </ul>
+
+                <hr>
+
+                <h2>5. Client Responsibilities</h2>
+                <p>The client agrees to:</p>
+                <ul>
+                  <li>Provide accurate project details, creative direction, and reference materials where required.</li>
+                  <li>Ensure access to locations, talent, permissions, and releases prior to filming.</li>
+                  <li>Obtain all necessary permits, approvals, and clearances unless otherwise agreed.</li>
+                  <li>Ensure a safe working environment during production.</li>
+                </ul>
+
+                <hr>
+
+                <h2>6. Creative Direction &amp; Revisions</h2>
+                <ul>
+                  <li>Creative decisions are guided by the agreed brief.</li>
+                  <li>One to two rounds of reasonable revisions are typically included (as specified in the quote).</li>
+                  <li>Additional revisions outside the agreed scope may incur extra charges.</li>
+                  <li>Major creative changes requested after production has commenced may require a revised quote.</li>
+                </ul>
+
+                <hr>
+
+                <h2>7. Delivery &amp; Turnaround</h2>
+                <ul>
+                  <li>Delivery timelines will be discussed and agreed upon prior to the project start.</li>
+                  <li>Turnaround times may vary depending on project scope and client feedback response times.</li>
+                  <li>Final files are typically delivered digitally unless otherwise specified.</li>
+                </ul>
+
+                <hr>
+
+                <h2>8. Ownership &amp; Usage Rights</h2>
+                <ul>
+                  <li>Who’s Julian? Films retains ownership of all raw footage unless otherwise agreed in writing.</li>
+                  <li>Upon full payment, the client is granted a licence to use the final delivered video for agreed purposes (e.g. marketing, social media, website).</li>
+                  <li>Usage beyond the agreed purpose (e.g. paid advertising, broadcast, resale) may require additional licensing fees.</li>
+                  <li>Who’s Julian? Films reserves the right to use completed projects for portfolio, website, and promotional purposes unless the client requests otherwise in writing.</li>
+                </ul>
+
+                <hr>
+
+                <h2>9. Music, Assets &amp; Third-Party Content</h2>
+                <ul>
+                  <li>Licensed music and assets will be used where applicable.</li>
+                  <li>Costs for music licensing or stock assets may be passed on to the client unless included in the quote.</li>
+                  <li>The client is responsible for ensuring they have rights to any materials they provide.</li>
+                </ul>
+
+                <hr>
+
+                <h2>10. Liability</h2>
+                <ul>
+                  <li>Who’s Julian? Films will take reasonable care during production but is not liable for indirect or consequential losses.</li>
+                  <li>Liability is limited to the total amount paid for the services.</li>
+                  <li>The client indemnifies Who’s Julian? Films against claims arising from materials or instructions supplied by the client.</li>
+                </ul>
+
+                <hr>
+
+                <h2>11. Confidentiality</h2>
+                <p>Any confidential information shared during the project will be kept confidential unless disclosure is required by law or agreed otherwise.</p>
+
+                <hr>
+
+                <h2>12. Termination</h2>
+                <p>Either party may terminate the agreement in writing if the other party breaches these Terms &amp; Conditions. Fees for work completed up to the termination date remain payable.</p>
+
+                <hr>
+
+                <h2>13. Governing Law</h2>
+                <p>These Terms &amp; Conditions are governed by the laws of Australia. Any disputes will be subject to the jurisdiction of Australian courts.</p>
+
+                <hr>
+
+                <h2>14. Acceptance</h2>
+                <p>By engaging Who’s Julian? Films, you acknowledge that you have read, understood, and agreed to these Terms &amp; Conditions.</p>
+
+                <hr>
+
+                <p><em>If you have any questions about these Terms &amp; Conditions, please get in touch before commencing a project.</em></p>
+              </div>
+            </div>
+          </section>
+
+          <div class="grid contact-logo-grid">
+            <div class="grid-item large contact-grid-item">
+              <img src="Images/Logo 1.png" alt="Who's Julian? Films logo">
+            </div>
+          </div>
         </form>
       </div>
     </main>
@@ -117,18 +354,142 @@
     </footer>
 
     <script>
-      // Display-only: reveal the success banner when the page is loaded with
-      // ?submitted=true after Netlify processes the form POST. This reads
-      // URLSearchParams for banner visibility only and never touches the
-      // form's native submission behaviour.
       (function () {
+        var form = document.getElementById('clientProjectForm');
+        var success = document.getElementById('form-success');
+        var error = document.getElementById('form-error');
+        var validation = document.getElementById('form-validation-message');
+        var submit = document.getElementById('sendFormBtn');
+        var additionalCoverageCheck = document.getElementById('additionalCoverageCheck');
+        var additionalHoursRow = document.getElementById('additionalHoursRow');
+        var termsButton = document.getElementById('termsAccordionTitle');
+        var termsPanel = document.getElementById('termsAccordionPanel');
+        var termsAccordion = termsButton ? termsButton.closest('.terms-accordion') : null;
         var params = new URLSearchParams(window.location.search);
-        if (params.get("submitted") === "true") {
-          var banner = document.getElementById("success-banner");
-          if (banner) {
-            banner.style.display = "block";
+
+        function showStatus(el) {
+          if (!el) return;
+          el.hidden = false;
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function clearMessages() {
+          if (success) success.hidden = true;
+          if (error) error.hidden = true;
+          if (validation) {
+            validation.hidden = true;
+            validation.textContent = '';
           }
         }
+
+        if (params.get('submitted') === 'true') {
+          showStatus(success);
+        }
+
+        if (additionalCoverageCheck && additionalHoursRow) {
+          additionalCoverageCheck.addEventListener('change', function () {
+            additionalHoursRow.style.display = this.checked ? 'block' : 'none';
+          });
+        }
+
+        if (termsButton && termsPanel) {
+          var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          var termsContent = termsPanel.querySelector('.terms-accordion__content');
+          var termsTimer;
+
+          function setTermsPanelHeight() {
+            if (termsButton.getAttribute('aria-expanded') === 'true' && !reducedMotion) {
+              termsPanel.style.maxHeight = termsPanel.scrollHeight + 'px';
+            }
+          }
+
+          termsButton.addEventListener('click', function () {
+            var isOpen = termsButton.getAttribute('aria-expanded') === 'true';
+            window.clearTimeout(termsTimer);
+
+            termsButton.setAttribute('aria-expanded', String(!isOpen));
+            if (termsAccordion) termsAccordion.classList.toggle('is-expanded', !isOpen);
+
+            if (isOpen) {
+              termsPanel.style.maxHeight = termsPanel.scrollHeight + 'px';
+              if (reducedMotion) {
+                termsPanel.classList.remove('is-open');
+                termsPanel.hidden = true;
+                termsPanel.style.maxHeight = '';
+                return;
+              }
+              requestAnimationFrame(function () {
+                termsPanel.classList.remove('is-open');
+                termsPanel.style.maxHeight = '0px';
+              });
+              termsTimer = window.setTimeout(function () {
+                if (termsButton.getAttribute('aria-expanded') === 'false') {
+                  termsPanel.hidden = true;
+                  termsPanel.style.maxHeight = '';
+                }
+              }, 470);
+              return;
+            }
+
+            termsPanel.hidden = false;
+            if (reducedMotion) {
+              termsPanel.classList.add('is-open');
+              termsPanel.style.maxHeight = 'none';
+              return;
+            }
+            requestAnimationFrame(function () {
+              termsPanel.classList.add('is-open');
+              termsPanel.style.maxHeight = termsPanel.scrollHeight + 'px';
+            });
+          });
+
+          if (window.ResizeObserver && termsContent) {
+            new ResizeObserver(setTermsPanelHeight).observe(termsContent);
+          } else {
+            window.addEventListener('resize', setTermsPanelHeight);
+          }
+        }
+
+        if (!form) return;
+
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          clearMessages();
+
+          if (!form.checkValidity()) {
+            var invalid = form.querySelector(':invalid');
+            var message = invalid && invalid.dataset.error ? invalid.dataset.error : 'Please complete the required fields before sending.';
+            if (validation) {
+              validation.textContent = message;
+              validation.hidden = false;
+            }
+            if (invalid) invalid.focus();
+            return;
+          }
+
+          if (submit) {
+            submit.disabled = true;
+            submit.textContent = 'Sending...';
+          }
+
+          fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(new FormData(form)).toString()
+          }).then(function (response) {
+            if (!response.ok) throw new Error('Form submission failed.');
+            form.reset();
+            if (additionalHoursRow) additionalHoursRow.style.display = 'none';
+            showStatus(success);
+          }).catch(function () {
+            showStatus(error);
+          }).finally(function () {
+            if (submit) {
+              submit.disabled = false;
+              submit.textContent = 'Send Form';
+            }
+          });
+        });
       })();
     </script>
   </body>
